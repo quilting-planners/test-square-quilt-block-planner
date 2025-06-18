@@ -167,22 +167,21 @@ const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
 const totalCols = cols + (showBorder ? 2 : 0);
 const totalRows = rows + (showBorder ? 2 : 0);
 
-const blockPx = 40;
+// Always start with large base block size for visibility
+const blockPx = 48;
 const sashPx = blockPx * sashRatio;
 const borderPx = blockPx * borderRatio;
 
-const contentWidth = (cols * blockPx) + ((cols - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
-const contentHeight = (rows * blockPx) + ((rows - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
+const visualWidth = (cols * blockPx) + ((cols - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
+const visualHeight = (rows * blockPx) + ((rows - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
 
-// Ensure container width respects padding
-const container = document.getElementById("output") || document.body;
-const containerWidth = container.clientWidth - 32;
+// Only scale down if too large
+const container = document.getElementById("output");
+const containerWidth = container.clientWidth;
 const maxHeight = 400;
+const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
 
-// Only scale down if necessary
-const scale = Math.min(1, containerWidth / contentWidth, maxHeight / contentHeight);
-
-// Generate column/row tracks
+// Generate grid
 let gridCols = '', gridRows = '';
 for (let c = 0; c < totalCols; c++) {
   if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderRatio}fr `;
@@ -195,7 +194,6 @@ for (let r = 0; r < totalRows; r++) {
   else gridRows += `1fr `;
 }
 
-// Generate HTML
 let quiltVisual = `
   <div class="quilt-visual-wrapper">
     <div class="quilt-visual-scale" style="transform: scale(${scale});">
@@ -219,6 +217,7 @@ for (let r = 0; r < totalRows; r++) {
 
 quiltVisual += `</div></div></div>`;
 html += quiltVisual;
+
 
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
