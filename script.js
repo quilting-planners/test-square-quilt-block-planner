@@ -203,17 +203,17 @@ html += `<p><strong>Backing</strong><br>
   ${wideBacking.panels} panels of ${backingLength.toFixed(1)}" x 108" fabric (${wideBacking.yards} yd)</p>`;
   
   
-   // Batting Recommendations (Quilter’s Dream, pre-filtered search links)
+ // Batting Recommendations (Quilter’s Dream, pre-filtered links with size filter)
 const battingSizes = [
   { name: "Crib", width: 46, length: 60, sizeTag: "Crib" },
   { name: "Throw", width: 60, length: 60, sizeTag: "Throw" },
   { name: "Twin", width: 72, length: 93, sizeTag: "Twin" },
-  { name: "Double", width: 96, length: 93, sizeTag: "Double" },
+  { name: "Double", width: 96, length: 93, sizeTag: "Full" }, // Fix: Use "Full" for MSQC link
   { name: "Queen", width: 108, length: 93, sizeTag: "Queen" },
   { name: "King", width: 122, length: 120, sizeTag: "King" },
 ];
 
-// Find all batting sizes that can cover the quilt (with rotation)
+// Find batting sizes that cover the quilt (allowing rotation)
 const available = battingSizes
   .filter(b =>
     (b.width >= quiltWidth && b.length >= quiltLength) ||
@@ -224,15 +224,15 @@ const available = battingSizes
 const batting = available.length > 0 ? available[0] : null;
 
 if (batting) {
-  // Construct URL to pre-filtered MSQC search
-  const query = encodeURIComponent(`quilters dream ${batting.sizeTag}`);
-  const url = `https://www.missouriquiltco.com/search?refinementList%5Bnamed_tags.Brand%5D%5B0%5D=Quilter%27s%20Dream&refinementList%5Bnamed_tags.Size%5D%5B0%5D=${batting.sizeTag}&q=${query}`;
+  // Link to Quilter’s Dream brand collection with size filter
+  const url = `https://www.missouriquiltco.com/collections/brand-quilters-dream?refinementList%5Bnamed_tags.Size%5D%5B0%5D=${encodeURIComponent(batting.sizeTag)}`;
 
   html += `<p><strong>Batting</strong><br>
     <a href="${url}" target="_blank">${batting.name} size Quilter's Dream batting</a></p>`;
 } else {
   html += `<p><strong>Batting</strong><br>Your quilt is larger than standard batting sizes. You may need to piece batting or order a batting roll.</p>`;
 }
+
 
 // Estimated Cost
 let fabricYards = 0;
