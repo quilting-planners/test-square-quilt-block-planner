@@ -224,19 +224,19 @@ button:hover {
 
 .quilt-visual-wrapper {
   margin-top: 20px;
-  border: 2px solid #444;
+  border: 1px solid #666;
   padding: 0;
-  background: transparent;
+  background: #FFF;
   display: inline-block;
   box-sizing: border-box;
-  width: 100%;
+  width: 50%;
   max-width: 100%;
   overflow: hidden;
 }
 
 .quilt-visual {
   display: grid;
-  width: 50%;
+  width: 100%;
   aspect-ratio: auto;
   background: transparent;
 }
