@@ -222,22 +222,34 @@ button:hover {
   margin-bottom: 48px;
 }
 
+.quilt-visual-wrapper {
+  display: inline-block;
+  border: 2px solid #444; /* outer quilt outline */
+  padding: 0;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  overflow-x: auto;
+  background: transparent;
+}
+
 .quilt-visual {
   display: grid;
-  gap: 2px;
-  margin: 1rem 0;
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: auto;
-  border: 1px solid #ccc;
+  gap: 0;
+  background: transparent;
 }
 
 .quilt-block {
-  background-color: #eee;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 1px solid #444; /* dark outline around each block */
   aspect-ratio: 1 / 1;
   width: 100%;
 }
+
+.sashing-horizontal,
+.sashing-vertical {
+  background-color: transparent;
+}
+
 
 
 #output {
