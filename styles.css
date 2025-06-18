@@ -224,6 +224,7 @@ button:hover {
 
 .quilt-visual-wrapper {
   margin-top: 20px;
+  margin: auto;
   border: 1px solid #666;
   padding: 0;
   background: #FFF;
@@ -243,6 +244,7 @@ button:hover {
 
 .quilt-cell {
   background-color: #666;
+  border: 1px solid #FFF;
   aspect-ratio: 1 / 1;
   width: 100%;
   box-sizing: border-box;
