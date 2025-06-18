@@ -222,44 +222,37 @@ button:hover {
 
 /* === Quilt Visual Styles === */
 .quilt-visual-wrapper {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   background: white;
   border: 1px solid #E5E5E5;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  padding: 0;             /* remove padding */
-  margin-top: 20px;
-  overflow: visible;
+  padding: 1rem;
+  overflow: auto;
+  max-height: 400px;
 }
 
 .quilt-visual-scale {
   transform-origin: top center;
   display: inline-block;
-  width: auto;
-  height: auto;
-  padding: 1rem;           /* this now represents the border space around quilt */
 }
-
-
 
 .quilt-visual {
   display: grid;
-  width: fit-content; 
-  height: fit-content;
+  width: auto;
+  height: auto;
 }
 
 .quilt-block {
   background-color: #6A6A6A;
-  /* white stroke */
   border: 1px solid white;
 }
 
-/* Transparent areas left as-is */
 .sashing,
 .border-strip {
   background-color: transparent;
 }
-
 
 .attribution {
   font-size: 0.75rem;
