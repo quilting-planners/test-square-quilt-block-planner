@@ -162,48 +162,88 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
 
-// === Quilt visual (responsive, dynamic sashing and border spacing) ===
+// === Quilt visual (responsive, proportional layout) ===
 const visualBlocksAcross = blocksAcross;
 const visualBlocksDown = blocksDown;
+const showSashing = sashing > 0;
+const showBorder = border > 0;
 
-const sashingPx = sashing > 0 ? sashing * 2 : 0;
-const borderPx = border > 0 ? border * 2 : 0;
-const blockPx = 30;
+const sashRatio = showSashing ? sashing / blockSize : 0;
+const borderRatio = showBorder ? border / blockSize : 0;
 
-// Calculate unscaled width/height
-const rawWidth = visualBlocksAcross * blockPx + (visualBlocksAcross - 1) * sashingPx + borderPx * 2;
-const rawHeight = visualBlocksDown * blockPx + (visualBlocksDown - 1) * sashingPx + borderPx * 2;
+const cols = visualBlocksAcross + (showSashing ? visualBlocksAcross - 1 : 0);
+const rows = visualBlocksDown + (showSashing ? visualBlocksDown - 1 : 0);
+const totalCols = cols + (showBorder ? 2 : 0);
+const totalRows = rows + (showBorder ? 2 : 0);
 
-// Use container width to determine scale
-const container = document.querySelector(".container") || document.body;
+// Base block size in px (used before scaling)
+const blockPx = 40;
+const sashPx = blockPx * sashRatio;
+const borderPx = blockPx * borderRatio;
+
+// Total visual size before scaling
+const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+
+// Calculate scale factor based on available container width and max height
+const container = document.getElementById("output") || document.body;
 const containerWidth = container.clientWidth;
 const maxHeight = 400;
+const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
 
-// Calculate scale to fit both height and width
-const scale = Math.min(1, containerWidth / rawWidth, maxHeight / rawHeight);
+// Build CSS grid templates
+let gridCols = '', gridRows = '';
 
-const gapStyle = sashing > 0 ? `gap: ${sashingPx}px;` : 'gap: 0;';
-const borderStyle = border > 0 ? `padding: ${borderPx}px;` : 'padding: 0;';
-
-let quiltVisual = `
-  <div class="quilt-visual-outer">
-    <div class="quilt-visual-wrapper" style="${borderStyle}; transform: scale(${scale}); transform-origin: top center;">
-      <div class="quilt-visual" style="grid-template-columns: repeat(${visualBlocksAcross}, 1fr); ${gapStyle}">`;
-
-for (let i = 0; i < visualBlocksAcross * visualBlocksDown; i++) {
-  quiltVisual += `<div class="quilt-block"></div>`;
+for (let c = 0; c < totalCols; c++) {
+  if (showBorder && (c === 0 || c === totalCols - 1)) {
+    gridCols += `${borderRatio}fr `;
+  } else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) {
+    gridCols += `${sashRatio}fr `;
+  } else {
+    gridCols += `1fr `;
+  }
 }
 
-quiltVisual += `
-      </div>
-    </div>
-  </div>`;
+for (let r = 0; r < totalRows; r++) {
+  if (showBorder && (r === 0 || r === totalRows - 1)) {
+    gridRows += `${borderRatio}fr `;
+  } else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) {
+    gridRows += `${sashRatio}fr `;
+  } else {
+    gridRows += `1fr `;
+  }
+}
+
+// Build quilt visual HTML
+let quiltVisual = `
+  <div class="quilt-visual-wrapper">
+    <div class="quilt-visual-scale" style="transform: scale(${scale}); transform-origin: top center;">
+      <div class="quilt-visual" style="
+        grid-template-columns: ${gridCols};
+        grid-template-rows: ${gridRows};
+        width: ${visualWidth}px;
+        height: ${visualHeight}px;
+      ">`;
+
+for (let r = 0; r < totalRows; r++) {
+  for (let c = 0; c < totalCols; c++) {
+    const isBorder = showBorder && (r === 0 || r === totalRows - 1 || c === 0 || c === totalCols - 1);
+    const isSashRow = showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1);
+    const isSashCol = showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1);
+    const isBlock = !isBorder && !(isSashRow || isSashCol);
+
+    if (isBlock) {
+      quiltVisual += `<div class="quilt-block"></div>`;
+    } else if (isBorder) {
+      quiltVisual += `<div class="border-strip"></div>`;
+    } else {
+      quiltVisual += `<div class="sashing"></div>`;
+    }
+  }
+}
+
+quiltVisual += `</div></div></div>`;
 html += quiltVisual;
-
-
-
-
-
     
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
