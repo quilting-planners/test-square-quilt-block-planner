@@ -222,31 +222,30 @@ button:hover {
   margin-bottom: 48px;
 }
 
-.quilt-visual-wrapper {
-  margin: 24px auto;
-  background-color: white;
-  border: 1px solid #E5E5E5;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  padding: 16px;
-  max-width: 100%;
-  width: fit-content;
+.quilt-visual-outer {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.quilt-visual-wrapper {
+  background: white;
+  border: 1px solid #E5E5E5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: inline-block;
 }
 
 .quilt-visual {
   display: grid;
-  justify-content: center;
+  width: fit-content;
 }
 
 .quilt-block {
-  background-color: #6A6A6A;
   aspect-ratio: 1 / 1;
-  width: 40px;
-  border: .5px solid white; /* White stroke */
-  box-sizing: border-box;
-  border-radius: 2px;
+  background-color: #6A6A6A;
+  border: 1px solid white;
 }
 
 
