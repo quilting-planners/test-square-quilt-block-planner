@@ -223,32 +223,40 @@ button:hover {
 }
 
 .quilt-visual-wrapper {
-  width: 100%;
-  max-width: 100%;
+  margin-top: 20px;
   border: 2px solid #444;
   padding: 0;
-  margin-bottom: 1.5rem;
   background: transparent;
+  display: inline-block;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .quilt-visual {
   display: grid;
-  gap: 0;
   width: 100%;
+  aspect-ratio: auto;
   background: transparent;
 }
 
-.quilt-block {
+.quilt-cell {
   background-color: white;
   border: 1px solid #444;
   aspect-ratio: 1 / 1;
   width: 100%;
+  box-sizing: border-box;
 }
 
-.sashing-horizontal,
-.sashing-vertical {
+.sashing {
   background-color: transparent;
+  border: none;
+}
+
+.border-strip {
+  background-color: transparent;
+  border: none;
 }
 
 
