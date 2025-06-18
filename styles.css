@@ -222,32 +222,37 @@ button:hover {
   margin-bottom: 48px;
 }
 
-.quilt-visual-outer {
+.quilt-visual-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  padding-top: 20px;
   max-height: 400px;
   overflow: hidden;
 }
 
-.quilt-visual-wrapper {
-  background: white;
-  border: 1px solid #E5E5E5;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+.quilt-visual-scale {
   display: inline-block;
 }
 
 .quilt-visual {
   display: grid;
-  width: fit-content;
+  background: white;
+  border: 1px solid #E5E5E5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .quilt-block {
-  aspect-ratio: 1 / 1;
-  background-color: #6A6A6A;
+  background: #7F759F;
   border: 1px solid white;
 }
 
+.sashing {
+  background: transparent;
+}
+
+.border-strip {
+  background: transparent;
+}
 
 
 #output {
