@@ -160,24 +160,28 @@ function generatePlan() {
 const showSashing = sashing > 0;
 const showBorder = border > 0;
 
-const blockPx = 40;
-const sashPx = showSashing ? (blockPx * (sashing / blockSize)) : 0;
-const borderPx = showBorder ? (blockPx * (border / blockSize)) : 0;
+const sashRatio = showSashing ? sashing / blockSize : 0;
+const borderRatio = showBorder ? border / blockSize : 0;
 
 const cols = blocksAcross + (showSashing ? blocksAcross - 1 : 0);
 const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
 const totalCols = cols + (showBorder ? 2 : 0);
 const totalRows = rows + (showBorder ? 2 : 0);
 
-const visualWidth = totalCols * blockPx + (cols - 1) * sashPx + 2 * borderPx;
-const visualHeight = totalRows * blockPx + (rows - 1) * sashPx + 2 * borderPx;
+// Always render block base size as 40px
+const blockPx = 40;
+const sashPx = blockPx * sashRatio;
+const borderPx = blockPx * borderRatio;
 
+const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+
+// Scale only if necessary
 const container = document.getElementById("output") || document.body;
-const containerWidth = container.clientWidth;
+const containerWidth = container.clientWidth - 32;
 const maxHeight = 400;
 const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
 
-// Build pixel-based grid sizes
 let gridCols = '', gridRows = '';
 for (let c = 0; c < totalCols; c++) {
   if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderPx}px `;
@@ -190,7 +194,6 @@ for (let r = 0; r < totalRows; r++) {
   else gridRows += `${blockPx}px `;
 }
 
-// Quilt visual markup
 let quiltVisual = `
   <div class="quilt-visual-wrapper">
     <div class="quilt-visual-scale" style="transform: scale(${scale});">
@@ -211,7 +214,7 @@ for (let r = 0; r < totalRows; r++) {
 
 quiltVisual += `</div></div></div>`;
 html += quiltVisual;
-    
+
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
     html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)</p>`;
