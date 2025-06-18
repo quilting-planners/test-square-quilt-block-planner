@@ -154,8 +154,9 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
       : `${bedName.charAt(0).toUpperCase() + bedName.slice(1)} bed cover`;
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
-    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}"</p>`;
-    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} total blocks (${blocksAcross} across by ${blocksDown} down)<br>Cut to ${cutBlockSize}" x ${cutBlockSize}"</p>`;
+    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>(${blocksAcross} blocks across by ${blocksDown} down)"</p>`;
+   
+    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)"</p>`;
 
 if (cutSashing) {
   html += `<p><strong>Sashing</strong><br>${sashingStrips} strips of ${cutSashing}" x 42" fabric (${sashingYards} yd)</p>`;
