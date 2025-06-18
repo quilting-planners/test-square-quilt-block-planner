@@ -253,10 +253,10 @@ const battingPriceEstimate = {
 
 const battingCost = batting ? (battingPriceEstimate[batting.name] || "$25–$40") : "$30+";
 
-html += `<p><strong>Estimated cost</strong><br>
-Fabric: $${estimatedFabricCost}<br>
-Batting: ${battingCost}</p>`;
 
+html += `<p><strong>Estimated cost</strong><br>
+Fabric: $${estimatedFabricCost} (${fabricYards.toFixed(2)} yd)<br>
+Batting: ${battingCost}</p>`;
 
 
 html += `
