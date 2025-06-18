@@ -161,6 +161,66 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
       : `${bedName.charAt(0).toUpperCase() + bedName.slice(1)} bed cover`;
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
+
+// Quilt visual (styled and proportional)
+const showSashing = sashing > 0;
+const showBorder = border > 0;
+
+const sashRatio = showSashing ? sashing / blockSize : 0;
+const borderRatio = showBorder ? border / blockSize : 0;
+
+const cols = blocksAcross + (showSashing ? blocksAcross - 1 : 0);
+const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
+const totalCols = cols + (showBorder ? 2 : 0);
+const totalRows = rows + (showBorder ? 2 : 0);
+
+// Create proportional column and row templates
+let gridTemplateCols = '';
+let gridTemplateRows = '';
+
+for (let c = 0; c < totalCols; c++) {
+  if (showBorder && (c === 0 || c === totalCols - 1)) {
+    gridTemplateCols += `${borderRatio}fr `;
+  } else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) {
+    gridTemplateCols += `${sashRatio}fr `;
+  } else {
+    gridTemplateCols += `1fr `;
+  }
+}
+
+for (let r = 0; r < totalRows; r++) {
+  if (showBorder && (r === 0 || r === totalRows - 1)) {
+    gridTemplateRows += `${borderRatio}fr `;
+  } else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) {
+    gridTemplateRows += `${sashRatio}fr `;
+  } else {
+    gridTemplateRows += `1fr `;
+  }
+}
+
+// Build the HTML
+let quiltVisual = `<div class="quilt-visual-wrapper"><div class="quilt-visual" style="grid-template-columns: ${gridTemplateCols}; grid-template-rows: ${gridTemplateRows};">`;
+
+for (let r = 0; r < totalRows; r++) {
+  for (let c = 0; c < totalCols; c++) {
+    const isBorder = showBorder && (r === 0 || r === totalRows - 1 || c === 0 || c === totalCols - 1);
+    const isSashingRow = showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1);
+    const isSashingCol = showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1);
+    const isBlock = !isBorder && !(isSashingRow || isSashingCol);
+
+    if (isBlock) {
+      quiltVisual += `<div class="quilt-cell"></div>`;
+    } else {
+      quiltVisual += `<div class="${isBorder ? 'border-strip' : 'sashing'}"></div>`;
+    }
+  }
+}
+
+quiltVisual += `</div></div>`;
+html += quiltVisual;
+
+
+    
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
     html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)</p>`;
