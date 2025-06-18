@@ -218,9 +218,11 @@ for (let r = 0; r < totalRows; r++) {
 }
 
 // Generate HTML
+const aspectRatio = totalCols / totalRows;
+
 let quiltVisual = `
   <div class="quilt-visual-wrapper">
-    <div class="quilt-visual-scale-container" style="transform: scale(${scale}); width: ${quiltVisualWidth}px;">
+    <div class="quilt-visual-container" style="--aspect-ratio: ${aspectRatio};">
       <div class="quilt-visual" style="
         grid-template-columns: ${gridTemplateCols};
         grid-template-rows: ${gridTemplateRows};
