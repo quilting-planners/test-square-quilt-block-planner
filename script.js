@@ -168,14 +168,22 @@ const visualBlocksDown = blocksDown;
 
 const sashingPx = sashing > 0 ? sashing * 2 : 0;
 const borderPx = border > 0 ? border * 2 : 0;
+const blockPx = 30;
+
+// Calculate unscaled width/height
+const rawWidth = visualBlocksAcross * blockPx + (visualBlocksAcross - 1) * sashingPx + borderPx * 2;
+const rawHeight = visualBlocksDown * blockPx + (visualBlocksDown - 1) * sashingPx + borderPx * 2;
+
+// Use container width to determine scale
+const container = document.querySelector(".container") || document.body;
+const containerWidth = container.clientWidth;
+const maxHeight = 400;
+
+// Calculate scale to fit both height and width
+const scale = Math.min(1, containerWidth / rawWidth, maxHeight / rawHeight);
 
 const gapStyle = sashing > 0 ? `gap: ${sashingPx}px;` : 'gap: 0;';
 const borderStyle = border > 0 ? `padding: ${borderPx}px;` : 'padding: 0;';
-
-// Quilt scale factor
-const maxHeight = 400;
-const visualHeight = visualBlocksDown * 30 + (visualBlocksDown - 1) * (sashing > 0 ? sashingPx : 0) + (border > 0 ? borderPx * 2 : 0);
-const scale = Math.min(1, maxHeight / visualHeight);
 
 let quiltVisual = `
   <div class="quilt-visual-outer">
@@ -191,6 +199,7 @@ quiltVisual += `
     </div>
   </div>`;
 html += quiltVisual;
+
 
 
 
