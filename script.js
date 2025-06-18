@@ -200,9 +200,8 @@ let quiltVisual = `
       <div class="quilt-visual" style="
         grid-template-columns: ${gridCols};
         grid-template-rows: ${gridRows};
-        width: ${visualWidth}px;
-        height: ${visualHeight}px;
       ">`;
+
 
 for (let r = 0; r < totalRows; r++) {
   for (let c = 0; c < totalCols; c++) {
