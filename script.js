@@ -197,7 +197,7 @@ for (let r = 0; r < totalRows; r++) {
   else gridRows += `1fr `;
 }
 
-const quiltVisual = `
+let quiltVisual = `
   <div class="quilt-visual-wrapper">
     <div class="quilt-visual-scale" style="transform: scale(${scale});">
       <div class="quilt-visual" style="
