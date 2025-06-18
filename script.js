@@ -111,6 +111,8 @@ function generatePlan() {
     const quiltWidth = topWidth + border * 2;
     const quiltLength = topLength + border * 2;
 
+    const WOF = 42;
+    
     const cutBlockSize = (blockSize + 0.5).toFixed(1);
     const totalBlocks = blocksAcross * blocksDown;
     const blocksPerStrip = Math.floor(WOF / cutBlockSize);
@@ -120,7 +122,7 @@ function generatePlan() {
     const cutSashing = sashing > 0 ? (sashing + 0.5).toFixed(1) : null;
     const cutBorder = border > 0 ? (border + 0.5).toFixed(1) : null;
 
-    const WOF = 42;
+   
 
   // Sashing
 let sashingStrips = null, sashingYards = null;
@@ -159,9 +161,9 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
       : `${bedName.charAt(0).toUpperCase() + bedName.slice(1)} bed cover`;
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
-    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>(${blocksAcross} blocks across by ${blocksDown} down)"</p>`;
+    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
-    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)"</p>`;
+    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)</p>`;
 
 if (cutSashing) {
   html += `<p><strong>Sashing</strong><br>${sashingStrips} strips of ${cutSashing}" x 42" fabric (${sashingYards} yd)</p>`;
@@ -173,41 +175,45 @@ if (cutBorder) {
 
 html += `<p><strong>Binding</strong><br>${bindingStrips} strips of 2.5" x 42" fabric (${bindingYards} yd)</p>`;
 
-    
-    // Backing Fabric
-    function getBackingPlan(fabricWidth) {
-      let panels, totalLength;
-      if (fabricWidth >= quiltWidth) {
-        panels = 1;
-        totalLength = quiltLength;
-      } else {
-        panels = Math.ceil(quiltWidth / fabricWidth);
-        totalLength = panels * quiltLength;
-      }
-      return {
-        width: fabricWidth,
-        panels,
-        yards: (totalLength / 36).toFixed(2),
-      };
-    }
+  // Backing Fabric — 4" extra width and height
+const backingWidth = quiltWidth + 4;
+const backingLength = quiltLength + 4;
 
-    const standardBacking = getBackingPlan(42);
-    const wideBacking = getBackingPlan(108);
+function getBackingPlan(fabricWidth) {
+  let panels, totalLength;
+  if (fabricWidth >= backingWidth) {
+    panels = 1;
+    totalLength = backingLength;
+  } else {
+    panels = Math.ceil(backingWidth / fabricWidth);
+    totalLength = panels * backingLength;
+  }
+  return {
+    width: fabricWidth,
+    panels,
+    yards: (totalLength / 36).toFixed(2),
+  };
+}
 
-    html += `<p><strong>Backing</strong><br>
-      ${standardBacking.yards} yd of 42" fabric (${standardBacking.panels} panels) or ${wideBacking.yards} yd of 108" fabric (${wideBacking.panels} panels)</p>`;
+const standardBacking = getBackingPlan(42);
+const wideBacking = getBackingPlan(108);
 
-// Batting Recommendations (Quilter’s Dream, pre-filtered search links)
+html += `<p><strong>Backing</strong><br>
+  ${standardBacking.panels} panels of ${backingLength.toFixed(1)}" x 42" fabric (${standardBacking.yards} yd) or
+  ${wideBacking.panels} panels of ${backingLength.toFixed(1)}" x 108" fabric (${wideBacking.yards} yd)</p>`;
+  
+  
+ // Batting Recommendations (Quilter’s Dream, pre-filtered links with size filter)
 const battingSizes = [
   { name: "Crib", width: 46, length: 60, sizeTag: "Crib" },
   { name: "Throw", width: 60, length: 60, sizeTag: "Throw" },
   { name: "Twin", width: 72, length: 93, sizeTag: "Twin" },
-  { name: "Double", width: 96, length: 93, sizeTag: "Double" },
+  { name: "Double", width: 96, length: 93, sizeTag: "Full" }, // Fix: Use "Full" for MSQC link
   { name: "Queen", width: 108, length: 93, sizeTag: "Queen" },
   { name: "King", width: 122, length: 120, sizeTag: "King" },
 ];
 
-// Find all batting sizes that can cover the quilt (with rotation)
+// Find batting sizes that cover the quilt (allowing rotation)
 const available = battingSizes
   .filter(b =>
     (b.width >= quiltWidth && b.length >= quiltLength) ||
@@ -218,15 +224,15 @@ const available = battingSizes
 const batting = available.length > 0 ? available[0] : null;
 
 if (batting) {
-  // Construct URL to pre-filtered MSQC search
-  const query = encodeURIComponent(`quilters dream ${batting.sizeTag}`);
-  const url = `https://www.missouriquiltco.com/search?refinementList%5Bnamed_tags.Brand%5D%5B0%5D=Quilter%27s%20Dream&refinementList%5Bnamed_tags.Size%5D%5B0%5D=${batting.sizeTag}&q=${query}`;
+  // Link to Quilter’s Dream brand collection with size filter
+  const url = `https://www.missouriquiltco.com/collections/brand-quilters-dream?refinementList%5Bnamed_tags.Size%5D%5B0%5D=${encodeURIComponent(batting.sizeTag)}`;
 
   html += `<p><strong>Batting</strong><br>
     <a href="${url}" target="_blank">${batting.name} size Quilter's Dream batting</a></p>`;
 } else {
   html += `<p><strong>Batting</strong><br>Your quilt is larger than standard batting sizes. You may need to piece batting or order a batting roll.</p>`;
 }
+
 
 // Estimated Cost
 let fabricYards = 0;
