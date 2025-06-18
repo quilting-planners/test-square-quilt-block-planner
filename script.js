@@ -161,9 +161,9 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
       : `${bedName.charAt(0).toUpperCase() + bedName.slice(1)} bed cover`;
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
-    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>(${blocksAcross} blocks across by ${blocksDown} down)"</p>`;
+    html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
-    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)"</p>`;
+    html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)</p>`;
 
 if (cutSashing) {
   html += `<p><strong>Sashing</strong><br>${sashingStrips} strips of ${cutSashing}" x 42" fabric (${sashingYards} yd)</p>`;
@@ -175,31 +175,35 @@ if (cutBorder) {
 
 html += `<p><strong>Binding</strong><br>${bindingStrips} strips of 2.5" x 42" fabric (${bindingYards} yd)</p>`;
 
-    
-    // Backing Fabric
-    function getBackingPlan(fabricWidth) {
-      let panels, totalLength;
-      if (fabricWidth >= quiltWidth) {
-        panels = 1;
-        totalLength = quiltLength;
-      } else {
-        panels = Math.ceil(quiltWidth / fabricWidth);
-        totalLength = panels * quiltLength;
-      }
-      return {
-        width: fabricWidth,
-        panels,
-        yards: (totalLength / 36).toFixed(2),
-      };
-    }
+  // Backing Fabric — 4" extra width and height
+const backingWidth = quiltWidth + 4;
+const backingLength = quiltLength + 4;
 
-    const standardBacking = getBackingPlan(42);
-    const wideBacking = getBackingPlan(108);
+function getBackingPlan(fabricWidth) {
+  let panels, totalLength;
+  if (fabricWidth >= backingWidth) {
+    panels = 1;
+    totalLength = backingLength;
+  } else {
+    panels = Math.ceil(backingWidth / fabricWidth);
+    totalLength = panels * backingLength;
+  }
+  return {
+    width: fabricWidth,
+    panels,
+    yards: (totalLength / 36).toFixed(2),
+  };
+}
 
-    html += `<p><strong>Backing</strong><br>
-      ${standardBacking.yards} yd of 42" fabric (${standardBacking.panels} panels) or ${wideBacking.yards} yd of 108" fabric (${wideBacking.panels} panels)</p>`;
+const standardBacking = getBackingPlan(42);
+const wideBacking = getBackingPlan(108);
 
-// Batting Recommendations (Quilter’s Dream, pre-filtered search links)
+html += `<p><strong>Backing</strong><br>
+  ${standardBacking.panels} panels of ${backingLength.toFixed(1)}" x 42" fabric (${standardBacking.yards} yd) or
+  ${wideBacking.panels} panels of ${backingLength.toFixed(1)}" x 108" fabric (${wideBacking.yards} yd)</p>`;
+  
+  
+   // Batting Recommendations (Quilter’s Dream, pre-filtered search links)
 const battingSizes = [
   { name: "Crib", width: 46, length: 60, sizeTag: "Crib" },
   { name: "Throw", width: 60, length: 60, sizeTag: "Throw" },
