@@ -161,6 +161,34 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
       : `${bedName.charAt(0).toUpperCase() + bedName.slice(1)} bed cover`;
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
+
+// Quilt visual (responsive, white blocks with outlines, transparent sashing)
+const showSashing = sashing > 0;
+const totalCols = blocksAcross * 2 - 1;
+const totalRows = blocksDown * 2 - 1;
+
+let quiltVisual = `<div class="quilt-visual-wrapper">`;
+quiltVisual += `<div class="quilt-visual" style="grid-template-columns: repeat(${totalCols}, 1fr);">`;
+
+for (let row = 0; row < totalRows; row++) {
+  for (let col = 0; col < totalCols; col++) {
+    const isBlock = row % 2 === 0 && col % 2 === 0;
+    const isVerticalSashing = row % 2 === 0 && col % 2 === 1;
+    const isHorizontalSashing = row % 2 === 1;
+
+    if (isBlock) {
+      quiltVisual += `<div class="quilt-block"></div>`;
+    } else if ((isVerticalSashing || isHorizontalSashing) && showSashing) {
+      quiltVisual += `<div class="${isVerticalSashing ? "sashing-vertical" : "sashing-horizontal"}"></div>`;
+    } else {
+      quiltVisual += `<div></div>`;
+    }
+  }
+}
+
+quiltVisual += `</div></div>`;
+html += quiltVisual;
+    
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
     html += `<p><strong>Blocks</strong><br>${blocksAcross * blocksDown} blocks cut to ${cutBlockSize}" x ${cutBlockSize} (${blocksYards} yd)</p>`;
