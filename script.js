@@ -112,6 +112,11 @@ function generatePlan() {
     const quiltLength = topLength + border * 2;
 
     const cutBlockSize = (blockSize + 0.5).toFixed(1);
+    const totalBlocks = blocksAcross * blocksDown;
+    const blocksPerStrip = Math.floor(WOF / cutBlockSize);
+    const blockStripsNeeded = Math.ceil(totalBlocks / blocksPerStrip);
+    const blocksYards = ((blockStripsNeeded * cutBlockSize) / 36).toFixed(2);
+
     const cutSashing = sashing > 0 ? (sashing + 0.5).toFixed(1) : null;
     const cutBorder = border > 0 ? (border + 0.5).toFixed(1) : null;
 
@@ -225,6 +230,7 @@ if (batting) {
 
 // Estimated Cost
 let fabricYards = 0;
+fabricYards += parseFloat(blocksYards || 0);
 fabricYards += parseFloat(sashingYards || 0);
 fabricYards += parseFloat(borderYards || 0);
 fabricYards += parseFloat(bindingYards || 0);
