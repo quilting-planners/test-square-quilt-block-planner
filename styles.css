@@ -223,15 +223,13 @@ button:hover {
 }
 
 .quilt-visual-wrapper {
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid #666;
+  margin: 32px auto;
+  border: 1px solid #999;
   padding: 0;
   background: #FFF;
-  display: inline-block;
+  display: block;
   box-sizing: border-box;
-  width: 50%;
+  width: 75%;
   overflow: hidden;
 }
 
