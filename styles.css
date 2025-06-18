@@ -236,14 +236,13 @@ button:hover {
 
 .quilt-visual {
   display: grid;
-  width: 100%;
+  width: 50%;
   aspect-ratio: auto;
   background: transparent;
 }
 
 .quilt-cell {
-  background-color: white;
-  border: 1px solid #444;
+  background-color: #666;
   aspect-ratio: 1 / 1;
   width: 100%;
   box-sizing: border-box;
