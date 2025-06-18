@@ -87,7 +87,6 @@ button.primary-large {
   color: #3A16B4;
 }
 
-
 button:hover {
   background-color: #3A16B4;
 }
@@ -105,14 +104,13 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px; /* Force equal height */
+  height: 48px;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 4px;
   white-space: nowrap;
 }
-
 
 .copy-message {
   color: green;
@@ -131,12 +129,14 @@ button:hover {
   }
 }
 
-
 .output {
   margin-top: 2.5rem;
-  padding: 1rem;
-  background-color: #EEE8FF;
+  padding: 1.5rem;
+  background-color: #F5F2FF;
+  border-radius: 0.5rem;
+  display: none;
 }
+
 .field-row {
   display: flex;
   align-items: center;
@@ -145,11 +145,10 @@ button:hover {
 }
 
 .field-row input[type="number"] {
-  width: 80px; /* increased from 60px */
+  width: 80px;
   font-size: 1.25rem;
   text-align: center;
 }
-
 
 .step-button {
   padding: 0.65rem 1.0rem;
@@ -178,7 +177,6 @@ button:hover {
   background-color: #f9f9f9;
 }
 
-
 .unit {
   font-size: 1.25rem;
 }
@@ -191,11 +189,11 @@ button:hover {
 }
 
 .radio-group label {
-  display: inline-flex;        /* Prevents full width */
+  display: inline-flex;
   align-items: center;
   font-weight: normal;
   gap: 0.5rem;
-  width: auto;                 /* Explicitly unset full width */
+  width: auto;
 }
 
 .radio-group input[type="radio"] {
@@ -213,7 +211,7 @@ button:hover {
 .hint {
   display: block;
   font-weight: 400;
-  color: #6e6e6e; /* dark gray */
+  color: #6e6e6e;
   margin-top: 0.25rem;
 }
 
@@ -222,6 +220,7 @@ button:hover {
   margin-bottom: 48px;
 }
 
+/* === Quilt Visual Styles === */
 .quilt-visual-wrapper {
   margin-top: 20px;
   display: flex;
@@ -245,10 +244,11 @@ button:hover {
   display: grid;
   width: fit-content;
   height: fit-content;
+  margin: auto;
 }
 
 .quilt-block {
-  background-color: #6A6A6A;
+  background-color: #7F759F;
   border: 1px solid white;
 }
 
@@ -260,14 +260,6 @@ button:hover {
   background-color: transparent;
 }
 
-
-#output {
-  background-color: #F5F2FF; 
-  display: none; 
-  padding: 1.5rem; 
-  border-radius: 0.5rem; 
-  margin-top: 2rem;
-}
 .attribution {
   font-size: 0.75rem;
   color: #666;
@@ -281,5 +273,6 @@ button:hover {
   text-decoration: underline;
   font-weight: 500;
 }
+
 
 
