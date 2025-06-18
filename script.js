@@ -248,12 +248,12 @@ const estimatedFabricCost = Math.round(fabricYards * avgFabricCostPerYard);
 
 // Estimate batting cost (approx range per size)
 const battingPriceEstimate = {
-  Crib: "$11",
-  Throw: "$15",
-  Twin: "$19",
-  Double: "$23",
-  Queen: "$28",
-  King: "$33",
+  Crib: "$15",
+  Throw: "$30",
+  Twin: "$30",
+  Double: "$35",
+  Queen: "$40",
+  King: "$50",
 };
 
 
