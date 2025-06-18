@@ -223,11 +223,13 @@ button:hover {
 }
 
 .quilt-visual-wrapper {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  padding-top: 20px;
-  max-height: 400px;
-  overflow: hidden;
+  background: white;
+  border: 1px solid #E5E5E5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  padding: 0.5rem;
 }
 
 .quilt-visual-scale {
@@ -236,22 +238,19 @@ button:hover {
 
 .quilt-visual {
   display: grid;
-  background: white;
-  border: 1px solid #E5E5E5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .quilt-block {
-  background: #7F759F;
+  background-color: #6A6A6A;
   border: 1px solid white;
 }
 
 .sashing {
-  background: transparent;
+  background-color: transparent;
 }
 
 .border-strip {
-  background: transparent;
+  background-color: transparent;
 }
 
 
