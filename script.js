@@ -157,6 +157,7 @@ function generatePlan() {
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
 
 // === Quilt Visual ===
+// === Quilt Visual ===
 const showSashing = sashing > 0;
 const showBorder = border > 0;
 const sashRatio = showSashing ? sashing / blockSize : 0;
