@@ -197,14 +197,12 @@ for (let r = 0; r < totalRows; r++) {
   else gridRows += `1fr `;
 }
 
-let quiltVisual = `
+const quiltVisual = `
   <div class="quilt-visual-wrapper">
-    <div class="quilt-visual-scale" style="transform: scale(${scale}); transform-origin: top center;">
+    <div class="quilt-visual-scale" style="transform: scale(${scale});">
       <div class="quilt-visual" style="
         grid-template-columns: ${gridCols};
         grid-template-rows: ${gridRows};
-        width: ${visualWidth}px;
-        height: ${visualHeight}px;
       ">`;
 
 for (let r = 0; r < totalRows; r++) {
