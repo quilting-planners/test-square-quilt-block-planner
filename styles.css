@@ -222,23 +222,24 @@ button:hover {
 
 /* === Quilt Visual Styles === */
 .quilt-visual-wrapper {
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   background: white;
   border: 1px solid #E5E5E5;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  padding: 1rem;
-  max-height: 400px;
-  overflow: auto;
+  padding: 0;             /* remove padding */
+  margin-top: 20px;
+  overflow: visible;
 }
 
 .quilt-visual-scale {
-  display: inline-block;
   transform-origin: top center;
+  display: inline-block;
   width: auto;
   height: auto;
+  padding: 1rem;           /* this now represents the border space around quilt */
 }
+
 
 
 .quilt-visual {
