@@ -162,7 +162,7 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
 
-// Quilt visual (styled and proportional)
+// Quilt visual (scales to fit max 400px height)
 const showSashing = sashing > 0;
 const showBorder = border > 0;
 
@@ -174,7 +174,26 @@ const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
 const totalCols = cols + (showBorder ? 2 : 0);
 const totalRows = rows + (showBorder ? 2 : 0);
 
-// Create proportional column and row templates
+// Size of one base block
+const blockPx = 30;
+const sashPx = blockPx * sashRatio;
+const borderPx = blockPx * borderRatio;
+
+// Calculate full quilt visual dimensions in px
+const totalWidth =
+  totalCols * blockPx +
+  (showSashing ? (blocksAcross - 1 + (showBorder ? 2 : 0)) * sashPx : 0) +
+  (showBorder ? 2 * borderPx : 0);
+const totalHeight =
+  totalRows * blockPx +
+  (showSashing ? (blocksDown - 1 + (showBorder ? 2 : 0)) * sashPx : 0) +
+  (showBorder ? 2 * borderPx : 0);
+
+// Calculate scale factor to fit max height
+const maxVisualHeight = 400;
+const scale = Math.min(1, maxVisualHeight / totalHeight);
+
+// Build grid templates
 let gridTemplateCols = '';
 let gridTemplateRows = '';
 
@@ -198,8 +217,15 @@ for (let r = 0; r < totalRows; r++) {
   }
 }
 
-// Build the HTML
-let quiltVisual = `<div class="quilt-visual-wrapper"><div class="quilt-visual" style="grid-template-columns: ${gridTemplateCols}; grid-template-rows: ${gridTemplateRows};">`;
+// Generate HTML
+let quiltVisual = `
+  <div class="quilt-visual-wrapper">
+    <div class="quilt-visual-scale-container" style="transform: scale(${scale}); width: ${totalWidth}px;">
+      <div class="quilt-visual" style="
+        grid-template-columns: ${gridTemplateCols};
+        grid-template-rows: ${gridTemplateRows};
+        width: ${totalWidth}px;
+      ">`;
 
 for (let r = 0; r < totalRows; r++) {
   for (let c = 0; c < totalCols; c++) {
@@ -216,8 +242,9 @@ for (let r = 0; r < totalRows; r++) {
   }
 }
 
-quiltVisual += `</div></div>`;
+quiltVisual += `</div></div></div>`;
 html += quiltVisual;
+
 
 
     
