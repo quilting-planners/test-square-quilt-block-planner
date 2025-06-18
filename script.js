@@ -156,54 +156,69 @@ function generatePlan() {
 
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
 
-    // === Quilt Visual ===
-    const showSashing = sashing > 0;
-    const showBorder = border > 0;
-    const sashRatio = showSashing ? sashing / blockSize : 0;
-    const borderRatio = showBorder ? border / blockSize : 0;
-    const cols = blocksAcross + (showSashing ? blocksAcross - 1 : 0);
-    const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
-    const totalCols = cols + (showBorder ? 2 : 0);
-    const totalRows = rows + (showBorder ? 2 : 0);
-    const blockPx = 40;
-    const sashPx = blockPx * sashRatio;
-    const borderPx = blockPx * borderRatio;
-    const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
-    const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+// === Quilt Visual ===
+const showSashing = sashing > 0;
+const showBorder = border > 0;
+const sashRatio = showSashing ? sashing / blockSize : 0;
+const borderRatio = showBorder ? border / blockSize : 0;
 
-    const container = document.getElementById("output") || document.body;
-    const containerWidth = container.clientWidth;
-    const maxHeight = 400;
-    const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
+const cols = blocksAcross + (showSashing ? blocksAcross - 1 : 0);
+const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
+const totalCols = cols + (showBorder ? 2 : 0);
+const totalRows = rows + (showBorder ? 2 : 0);
 
-    let gridCols = '', gridRows = '';
-    for (let c = 0; c < totalCols; c++) {
-      if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderRatio}fr `;
-      else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) gridCols += `${sashRatio}fr `;
-      else gridCols += `1fr `;
-    }
-    for (let r = 0; r < totalRows; r++) {
-      if (showBorder && (r === 0 || r === totalRows - 1)) gridRows += `${borderRatio}fr `;
-      else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) gridRows += `${sashRatio}fr `;
-      else gridRows += `1fr `;
-    }
+const blockPx = 40;
+const sashPx = blockPx * sashRatio;
+const borderPx = blockPx * borderRatio;
 
-    let quiltVisual = `<div class="quilt-visual-wrapper"><div class="quilt-visual-scale" style="transform: scale(${scale});"><div class="quilt-visual" style="grid-template-columns: ${gridCols}; grid-template-rows: ${gridRows};">`;
+const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
 
-    for (let r = 0; r < totalRows; r++) {
-      for (let c = 0; c < totalCols; c++) {
-        const isBorder = showBorder && (r === 0 || r === totalRows - 1 || c === 0 || c === totalCols - 1);
-        const isSashRow = showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1);
-        const isSashCol = showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1);
-        const isBlock = !isBorder && !(isSashRow || isSashCol);
-        if (isBlock) quiltVisual += `<div class="quilt-block"></div>`;
-        else if (isBorder) quiltVisual += `<div class="border-strip"></div>`;
-        else quiltVisual += `<div class="sashing"></div>`;
-      }
-    }
+const container = document.getElementById("output") || document.body;
+const containerWidth = container.clientWidth - 32; // account for container padding
+const maxHeight = 400;
+const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
 
-    quiltVisual += `</div></div></div>`;
-    html += quiltVisual; 
+// Grid column and row sizing
+let gridCols = '', gridRows = '';
+for (let c = 0; c < totalCols; c++) {
+  if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderRatio}fr `;
+  else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) gridCols += `${sashRatio}fr `;
+  else gridCols += `1fr `;
+}
+for (let r = 0; r < totalRows; r++) {
+  if (showBorder && (r === 0 || r === totalRows - 1)) gridRows += `${borderRatio}fr `;
+  else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) gridRows += `${sashRatio}fr `;
+  else gridRows += `1fr `;
+}
+
+// Quilt visual HTML
+let quiltVisual = `
+  <div class="quilt-visual-wrapper">
+    <div class="quilt-visual-scale" style="transform: scale(${scale});">
+      <div class="quilt-visual" style="
+        grid-template-columns: ${gridCols};
+        grid-template-rows: ${gridRows};
+        width: ${visualWidth}px;
+        height: ${visualHeight}px;
+      ">`;
+
+for (let r = 0; r < totalRows; r++) {
+  for (let c = 0; c < totalCols; c++) {
+    const isBorder = showBorder && (r === 0 || r === totalRows - 1 || c === 0 || c === totalCols - 1);
+    const isSashRow = showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1);
+    const isSashCol = showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1);
+    const isBlock = !isBorder && !(isSashRow || isSashCol);
+
+    if (isBlock) quiltVisual += `<div class="quilt-block"></div>`;
+    else if (isBorder) quiltVisual += `<div class="border-strip"></div>`;
+    else quiltVisual += `<div class="sashing"></div>`;
+  }
+}
+
+quiltVisual += `</div></div></div>`;
+html += quiltVisual;
+
     
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
