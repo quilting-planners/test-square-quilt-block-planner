@@ -159,7 +159,6 @@ function generatePlan() {
 // === Quilt Visual ===
 const showSashing = sashing > 0;
 const showBorder = border > 0;
-
 const sashRatio = showSashing ? sashing / blockSize : 0;
 const borderRatio = showBorder ? border / blockSize : 0;
 
@@ -168,36 +167,42 @@ const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
 const totalCols = cols + (showBorder ? 2 : 0);
 const totalRows = rows + (showBorder ? 2 : 0);
 
-// Always render block base size as 40px
 const blockPx = 40;
 const sashPx = blockPx * sashRatio;
 const borderPx = blockPx * borderRatio;
 
-const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
-const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0) + (showBorder ? 2 * borderPx : 0);
+const contentWidth = (cols * blockPx) + ((cols - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
+const contentHeight = (rows * blockPx) + ((rows - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
 
-// Scale only if necessary
+// Ensure container width respects padding
 const container = document.getElementById("output") || document.body;
 const containerWidth = container.clientWidth - 32;
 const maxHeight = 400;
-const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
 
+// Only scale down if necessary
+const scale = Math.min(1, containerWidth / contentWidth, maxHeight / contentHeight);
+
+// Generate column/row tracks
 let gridCols = '', gridRows = '';
 for (let c = 0; c < totalCols; c++) {
-  if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderPx}px `;
-  else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) gridCols += `${sashPx}px `;
-  else gridCols += `${blockPx}px `;
+  if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderRatio}fr `;
+  else if (showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1)) gridCols += `${sashRatio}fr `;
+  else gridCols += `1fr `;
 }
 for (let r = 0; r < totalRows; r++) {
-  if (showBorder && (r === 0 || r === totalRows - 1)) gridRows += `${borderPx}px `;
-  else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) gridRows += `${sashPx}px `;
-  else gridRows += `${blockPx}px `;
+  if (showBorder && (r === 0 || r === totalRows - 1)) gridRows += `${borderRatio}fr `;
+  else if (showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1)) gridRows += `${sashRatio}fr `;
+  else gridRows += `1fr `;
 }
 
+// Generate HTML
 let quiltVisual = `
   <div class="quilt-visual-wrapper">
     <div class="quilt-visual-scale" style="transform: scale(${scale});">
-      <div class="quilt-visual" style="grid-template-columns: ${gridCols}; grid-template-rows: ${gridRows};">`;
+      <div class="quilt-visual" style="
+        grid-template-columns: ${gridCols};
+        grid-template-rows: ${gridRows};
+      ">`;
 
 for (let r = 0; r < totalRows; r++) {
   for (let c = 0; c < totalCols; c++) {
