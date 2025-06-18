@@ -111,6 +111,8 @@ function generatePlan() {
     const quiltWidth = topWidth + border * 2;
     const quiltLength = topLength + border * 2;
 
+    const WOF = 42;
+    
     const cutBlockSize = (blockSize + 0.5).toFixed(1);
     const totalBlocks = blocksAcross * blocksDown;
     const blocksPerStrip = Math.floor(WOF / cutBlockSize);
@@ -120,7 +122,7 @@ function generatePlan() {
     const cutSashing = sashing > 0 ? (sashing + 0.5).toFixed(1) : null;
     const cutBorder = border > 0 ? (border + 0.5).toFixed(1) : null;
 
-    const WOF = 42;
+   
 
   // Sashing
 let sashingStrips = null, sashingYards = null;
