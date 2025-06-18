@@ -167,21 +167,22 @@ const rows = blocksDown + (showSashing ? blocksDown - 1 : 0);
 const totalCols = cols + (showBorder ? 2 : 0);
 const totalRows = rows + (showBorder ? 2 : 0);
 
-// Always start with large base block size for visibility
-const blockPx = 48;
+// Base block size
+const blockPx = 40;
 const sashPx = blockPx * sashRatio;
 const borderPx = blockPx * borderRatio;
 
-const visualWidth = (cols * blockPx) + ((cols - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
-const visualHeight = (rows * blockPx) + ((rows - 1) * sashPx) + (showBorder ? 2 * borderPx : 0);
+// Visual size before scaling
+const visualWidth = totalCols * blockPx + (showSashing ? (cols - 1) * sashPx : 0);
+const visualHeight = totalRows * blockPx + (showSashing ? (rows - 1) * sashPx : 0);
 
-// Only scale down if too large
-const container = document.getElementById("output");
-const containerWidth = container.clientWidth;
+// Wrapper max height
 const maxHeight = 400;
-const scale = Math.min(1, containerWidth / visualWidth, maxHeight / visualHeight);
+const maxWidth = document.getElementById("output").clientWidth - 32; // allow for padding
 
-// Generate grid
+// Scale to fit inside maxWidth and maxHeight, but don’t shrink too small
+const scale = Math.max(0.4, Math.min(1, maxWidth / visualWidth, maxHeight / visualHeight));
+
 let gridCols = '', gridRows = '';
 for (let c = 0; c < totalCols; c++) {
   if (showBorder && (c === 0 || c === totalCols - 1)) gridCols += `${borderRatio}fr `;
@@ -208,7 +209,6 @@ for (let r = 0; r < totalRows; r++) {
     const isSashRow = showSashing && ((r - (showBorder ? 1 : 0)) % 2 === 1);
     const isSashCol = showSashing && ((c - (showBorder ? 1 : 0)) % 2 === 1);
     const isBlock = !isBorder && !(isSashRow || isSashCol);
-
     if (isBlock) quiltVisual += `<div class="quilt-block"></div>`;
     else if (isBorder) quiltVisual += `<div class="border-strip"></div>`;
     else quiltVisual += `<div class="sashing"></div>`;
@@ -217,7 +217,6 @@ for (let r = 0; r < totalRows; r++) {
 
 quiltVisual += `</div></div></div>`;
 html += quiltVisual;
-
 
     html += `<p><strong>Finished quilt</strong><br>${quiltWidth.toFixed(1)}" x ${quiltLength.toFixed(1)}<br>${blocksAcross} blocks across by ${blocksDown} down</p>`;
    
