@@ -224,7 +224,8 @@ button:hover {
 
 .quilt-visual-wrapper {
   margin-top: 20px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid #666;
   padding: 0;
   background: #FFF;
