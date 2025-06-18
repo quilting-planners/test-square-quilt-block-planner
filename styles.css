@@ -236,9 +236,10 @@ button:hover {
 .quilt-visual-scale {
   display: inline-block;
   transform-origin: top center;
-  width: fit-content;  
-  height: fit-content; 
+  width: auto;
+  height: auto;
 }
+
 
 .quilt-visual {
   display: grid;
