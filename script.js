@@ -180,7 +180,7 @@ const sashPx = blockPx * sashRatio;
 const borderPx = blockPx * borderRatio;
 
 // Calculate full quilt visual dimensions in px
-const totalWidth =
+const quiltVisualWidth =
   totalCols * blockPx +
   (showSashing ? (blocksAcross - 1 + (showBorder ? 2 : 0)) * sashPx : 0) +
   (showBorder ? 2 * borderPx : 0);
@@ -220,11 +220,11 @@ for (let r = 0; r < totalRows; r++) {
 // Generate HTML
 let quiltVisual = `
   <div class="quilt-visual-wrapper">
-    <div class="quilt-visual-scale-container" style="transform: scale(${scale}); width: ${totalWidth}px;">
+    <div class="quilt-visual-scale-container" style="transform: scale(${scale}); width: ${quiltVisualWidth}px;">
       <div class="quilt-visual" style="
         grid-template-columns: ${gridTemplateCols};
         grid-template-rows: ${gridTemplateRows};
-        width: ${totalWidth}px;
+        width: ${quiltVisualWidth}px;
       ">`;
 
 for (let r = 0; r < totalRows; r++) {
