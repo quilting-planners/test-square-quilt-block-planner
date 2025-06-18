@@ -222,6 +222,23 @@ button:hover {
   margin-bottom: 48px;
 }
 
+.quilt-visual {
+  display: grid;
+  gap: 2px;
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: auto;
+  border: 1px solid #ccc;
+}
+
+.quilt-block {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+
 
 #output {
   background-color: #F5F2FF; 
