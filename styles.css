@@ -1,247 +1,51 @@
-body {
-  font-family: 'Public Sans', Arial, sans-serif;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  color: #1f1f1f;
-  font-size: 20px;
-}
-
-h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-h3 {
-  font-size: 16px;
-  margin-bottom: 0px;
-  margin-top: 28px;
-  font-weight: 400;
-  color: #6e6e6e;
-}
-
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 2rem;
-}
-
-form label {
-  display: block;
-  margin-top: 1rem;
-  font-weight: 700;
-}
-
-input, select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  box-sizing: border-box;
-}
-
-button {
-  padding: 0.75rem 1rem;
-  background-color: #531fff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 4px;
-  font-weight: 700;
-}
-
-button.primary-large {
-  font-size: 1.25rem;
-  padding: 1rem 1.5rem;
-}
-
-.copy-button {
-  padding: 0.75rem 1rem;
-  background-color: #531fff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 4px;
-  font-weight: 700;
-}
-
-.copy-button:hover {
-  background-color: #3A16B4;
-}
-
-.outline-button {
-  padding: 0.75rem 1rem;
-  background-color: transparent;
-  color: #531fff;
-  border: 2px solid #531fff;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 4px;
-  font-weight: 700;
-}
-
-.outline-button:hover {
-  background-color: #f4f0ff;
-  border-color: #3A16B4;
-  color: #3A16B4;
-}
-
-
-button:hover {
-  background-color: #3A16B4;
-}
-
-.button-group {
+.quilt-visual-wrapper {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  align-items: stretch;
-}
-
-.button-group button {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  height: 48px; /* Force equal height */
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  font-weight: 700;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-
-.copy-message {
-  color: green;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-}
-
-/* Mobile: stack buttons full-width */
-@media (max-width: 600px) {
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group button {
-    width: 100%;
-  }
-}
-
-
-.output {
-  margin-top: 2.5rem;
+  align-items: flex-start;
+  max-height: 400px;
+  overflow: auto;
+  margin-top: 20px;
+  background: white;
+  border: 1px solid #E5E5E5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   padding: 1rem;
-  background-color: #EEE8FF;
-}
-.field-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
 }
 
-.field-row input[type="number"] {
-  width: 80px; /* increased from 60px */
-  font-size: 1.25rem;
-  text-align: center;
+.quilt-visual {
+  display: grid;
+  width: fit-content;
+  height: fit-content;
+  gap: 0; 
 }
 
-
-.step-button {
-  padding: 0.65rem 1.0rem;
-  font-size: 1.25rem;
-  background-color: white;
-  border: 2px solid #531fff;
-  color: #531fff;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  line-height: 1;
+.quilt-visual > div {
+  width: 40px;
+  height: 40px;
 }
 
-.step-button:hover {
-  background-color: #f0f0f0;
+.quilt-visual .quilt-block {
+  background-color: #7F759F;
+  border: 1px solid white;
 }
 
-.step-button:disabled {
-  border-color: #ccc;
-  color: #ccc;
-  background-color: #f9f9f9;
-  cursor: not-allowed;
+.quilt-visual .sashing,
+.quilt-visual .border-strip {
+  background-color: transparent;
 }
 
-.step-button:disabled:hover {
-  background-color: #f9f9f9;
+.quilt-visual {
+  grid-template-columns: repeat(auto-fill, 40px);
+  grid-template-rows: repeat(auto-fill, 40px);
 }
 
-
-.unit {
-  font-size: 1.25rem;
+.quilt-visual[style*="grid-template-columns"] {
+  grid-auto-columns: 40px;
 }
 
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
+.quilt-visual[style*="grid-template-rows"] {
+  grid-auto-rows: 40px;
 }
 
-.radio-group label {
-  display: inline-flex;        /* Prevents full width */
-  align-items: center;
-  font-weight: normal;
-  gap: 0.5rem;
-  width: auto;                 /* Explicitly unset full width */
+.quilt-visual .border-strip {
+  background-color: transparent;
 }
-
-.radio-group input[type="radio"] {
-  width: auto;
-  flex-shrink: 0;
-  vertical-align: middle;
-  margin-top: 0;
-  line-height: 1;
-}
-
-.form-group {
-  margin-bottom: 48px;
-}
-
-.hint {
-  display: block;
-  font-weight: 400;
-  color: #6e6e6e; /* dark gray */
-  margin-top: 0.25rem;
-}
-
-.intro-hint {
-  display: block;
-  margin-bottom: 48px;
-}
-
-
-#output {
-  background-color: #F5F2FF; 
-  display: none; 
-  padding: 1.5rem; 
-  border-radius: 0.5rem; 
-  margin-top: 2rem;
-}
-.attribution {
-  font-size: 0.75rem;
-  color: #666;
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.attribution a {
-  color: #531fff;
-  text-decoration: underline;
-  font-weight: 500;
-}
-
-

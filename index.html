@@ -6,27 +6,24 @@
   <title>Square quilt block planner</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
- <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
   <main class="container">
     <h1>Square quilt block planner</h1>
     <span class="hint intro-hint">What you'll need for a quilt with square blocks.</span>
 
-    
     <form id="quilt-form">
-
-  <div class="form-group">
-     <label>How will you use the quilt?</label>
+      <div class="form-group">
+        <label>How will you use the quilt?</label>
         <div class="radio-group" id="use">
           <label><input type="radio" name="use" value="Bed cover" checked /> Bed cover</label>
           <label><input type="radio" name="use" value="Throw for couch" /> Throw blanket</label>
         </div>
- </div>
+      </div>
 
-    <div class="form-group" id="bed-size-group">
-      <label>What size bed?</label>
+      <div class="form-group" id="bed-size-group">
+        <label>What size bed?</label>
         <div class="radio-group" id="bed-size">
           <label><input type="radio" name="bed-size" value="28x52" /> Crib (28 x 52")</label>
           <label><input type="radio" name="bed-size" value="38x75" /> Twin (38 x 75")</label>
@@ -36,74 +33,71 @@
           <label><input type="radio" name="bed-size" value="76x80" /> King (76 x 80")</label>
           <label><input type="radio" name="bed-size" value="72x84" /> California King (72 x 84")</label>
         </div>
-   </div>
-      
+      </div>
+
       <div class="form-group" id="throw-size-group" style="display:none;">
-  <label>What size throw blanket?</label>
-  <div class="radio-group">
-    <label><input type="radio" name="throw-size" value="small" /> Small (50” x 40”)</label>
-    <label><input type="radio" name="throw-size" value="standard" /> Standard (60” x 50”)</label>
-    <label><input type="radio" name="throw-size" value="large" /> Large (70” x 60”)</label>
-    <label><input type="radio" name="throw-size" value="oversized" /> Oversized (80” x 70”)</label>
-  </div>
-</div>
+        <label>What size throw blanket?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="throw-size" value="small" /> Small (50” x 40”)</label>
+          <label><input type="radio" name="throw-size" value="standard" /> Standard (60” x 50”)</label>
+          <label><input type="radio" name="throw-size" value="large" /> Large (70” x 60”)</label>
+          <label><input type="radio" name="throw-size" value="oversized" /> Oversized (80” x 70”)</label>
+        </div>
+      </div>
 
-<div class="form-group" id="overhang-group">
-  <label>How much will the quilt hang over each side of the bed?</label>
-  <div class="field-row">
-    <button type="button" class="step-button" data-target="overhang" data-change="-0.5">−</button>
-    <input type="number" id="overhang" value="10" min="0" step="0.5" />
-    <button type="button" class="step-button" data-target="overhang" data-change="0.5">+</button>
-    <span class="unit">inches</span>
-  </div>
-</div>
+      <div class="form-group" id="overhang-group">
+        <label>How much will the quilt hang over each side of the bed?</label>
+        <div class="field-row">
+          <button type="button" class="step-button" data-target="overhang" data-change="-0.5">−</button>
+          <input type="number" id="overhang" value="10" min="0" step="0.5" />
+          <button type="button" class="step-button" data-target="overhang" data-change="0.5">+</button>
+          <span class="unit">inches</span>
+        </div>
+      </div>
 
-<div class="form-group">
-  <label>Finished block size</label>
-  <span class="hint">This only works with square blocks.</span>
-  <div class="field-row">
-    <button type="button" class="step-button" data-target="block-size" data-change="-0.5">−</button>
-    <input type="number" id="block-size" value="9" min="1" step="0.5" />
-    <button type="button" class="step-button" data-target="block-size" data-change="0.5">+</button>
-    <span class="unit">inches</span>
-  </div>
-</div>
+      <div class="form-group">
+        <label>Finished block size</label>
+        <span class="hint">This only works with square blocks.</span>
+        <div class="field-row">
+          <button type="button" class="step-button" data-target="block-size" data-change="-0.5">−</button>
+          <input type="number" id="block-size" value="9" min="1" step="0.5" />
+          <button type="button" class="step-button" data-target="block-size" data-change="0.5">+</button>
+          <span class="unit">inches</span>
+        </div>
+      </div>
 
-<div class="form-group">
-  <label>Finished sashing width</label>
-  <span class="hint">Sashing is the fabric between blocks.</span>
-  <div class="field-row">
-    <button type="button" class="step-button" data-target="sashing" data-change="-0.5">−</button>
-    <input type="number" id="sashing" value="0" min="0" step="0.5" />
-    <button type="button" class="step-button" data-target="sashing" data-change="0.5">+</button>
-    <span class="unit">inches</span>
-  </div>
-</div>
+      <div class="form-group">
+        <label>Finished sashing width</label>
+        <span class="hint">Sashing is the fabric between blocks.</span>
+        <div class="field-row">
+          <button type="button" class="step-button" data-target="sashing" data-change="-0.5">−</button>
+          <input type="number" id="sashing" value="0" min="0" step="0.5" />
+          <button type="button" class="step-button" data-target="sashing" data-change="0.5">+</button>
+          <span class="unit">inches</span>
+        </div>
+      </div>
 
-<div class="form-group">
-  <label>Finished border width</label>
-  <span class="hint">Border is the fabric around the quilt and inside the binding.</span>
-  <div class="field-row">
-    <button type="button" class="step-button" data-target="border" data-change="-0.5">−</button>
-    <input type="number" id="border" value="0" min="0" step="0.5" />
-    <button type="button" class="step-button" data-target="border" data-change="0.5">+</button>
-    <span class="unit">inches</span>
-  </div>
-</div>
+      <div class="form-group">
+        <label>Finished border width</label>
+        <span class="hint">Border is the fabric around the quilt and inside the binding.</span>
+        <div class="field-row">
+          <button type="button" class="step-button" data-target="border" data-change="-0.5">−</button>
+          <input type="number" id="border" value="0" min="0" step="0.5" />
+          <button type="button" class="step-button" data-target="border" data-change="0.5">+</button>
+          <span class="unit">inches</span>
+        </div>
+      </div>
 
-    
       <button id="generate-button" class="primary-large" type="button">Create plan</button>
-      
     </form>
 
     <section id="output" class="output"></section>
   </main>
 
   <footer class="attribution">
-  Created by <a href="https://emily-gilles.com/" target="_blank">Emily</a> with the help of ChatGPT
-</footer>
+    Created by <a href="https://emily-gilles.com/" target="_blank">Emily</a> with the help of ChatGPT
+  </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
-
