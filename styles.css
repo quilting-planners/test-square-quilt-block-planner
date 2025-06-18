@@ -223,24 +223,25 @@ button:hover {
 }
 
 .quilt-visual-wrapper {
-  display: inline-block;
-  border: 2px solid #444; /* outer quilt outline */
+  width: 100%;
+  max-width: 100%;
+  border: 2px solid #444;
   padding: 0;
   margin-bottom: 1.5rem;
-  max-width: 100%;
-  overflow-x: auto;
   background: transparent;
+  box-sizing: border-box;
 }
 
 .quilt-visual {
   display: grid;
   gap: 0;
+  width: 100%;
   background: transparent;
 }
 
 .quilt-block {
   background-color: white;
-  border: 1px solid #444; /* dark outline around each block */
+  border: 1px solid #444;
   aspect-ratio: 1 / 1;
   width: 100%;
 }
