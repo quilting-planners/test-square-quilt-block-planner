@@ -241,10 +241,10 @@ button:hover {
 }
 
 .quilt-block {
-  background-color: #7F759F;
+  background-color: #6A6A6A;
   aspect-ratio: 1 / 1;
   width: 40px;
-  border: 1px solid white; /* White stroke */
+  border: .5px solid white; /* White stroke */
   box-sizing: border-box;
   border-radius: 2px;
 }
