@@ -163,34 +163,33 @@ const bindingYards = ((bindingStrips * bindingWidth) / 36).toFixed(2);
     let html = `<h2>${planTitle}</h2><span class="hint">${summary}</span>`;
 
 // === Quilt visual (responsive, dynamic sashing and border spacing) ===
+const visualBlocksAcross = blocksAcross;
+const visualBlocksDown = blocksDown;
 
-// Calculate number of blocks
-const blocksAcross = Math.round(totalWidth / (blockSize + sashing));
-const blocksDown = Math.round(totalLength / (blockSize + sashing));
-
-// Scale sashing and border spacing visually (adjust multipliers if needed)
 const sashingPx = sashing > 0 ? sashing * 2 : 0;
 const borderPx = border > 0 ? border * 2 : 0;
 
-// Only add gap if sashing is > 0
-const gapStyle = sashing > 0 ? `gap: ${sashingPx}px;` : '';
+const gapStyle = sashing > 0 ? `gap: ${sashingPx}px;` : 'gap: 0;';
+const borderStyle = border > 0 ? `padding: ${borderPx}px;` : 'padding: 0;';
 
-// Only add outer padding if border is > 0
-const borderStyle = border > 0 ? `padding: ${borderPx}px;` : '';
+// Quilt scale factor
+const maxHeight = 400;
+const visualHeight = visualBlocksDown * 30 + (visualBlocksDown - 1) * (sashing > 0 ? sashingPx : 0) + (border > 0 ? borderPx * 2 : 0);
+const scale = Math.min(1, maxHeight / visualHeight);
 
-// Build grid HTML
 let quiltVisual = `
-  <div class="quilt-visual-wrapper" style="${borderStyle}">
-    <div class="quilt-visual" style="
-      grid-template-columns: repeat(${blocksAcross}, 1fr);
-      ${gapStyle}
-    ">`;
+  <div class="quilt-visual-outer">
+    <div class="quilt-visual-wrapper" style="${borderStyle}; transform: scale(${scale}); transform-origin: top center;">
+      <div class="quilt-visual" style="grid-template-columns: repeat(${visualBlocksAcross}, 1fr); ${gapStyle}">`;
 
-for (let i = 0; i < blocksAcross * blocksDown; i++) {
+for (let i = 0; i < visualBlocksAcross * visualBlocksDown; i++) {
   quiltVisual += `<div class="quilt-block"></div>`;
 }
 
-quiltVisual += `</div></div>`;
+quiltVisual += `
+      </div>
+    </div>
+  </div>`;
 html += quiltVisual;
 
 
