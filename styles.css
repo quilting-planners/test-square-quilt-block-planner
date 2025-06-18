@@ -230,23 +230,20 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   padding: 1rem;
   max-height: 400px;
-  /* change overflow so entire visual remains visible: */
-  overflow: visible;
+  overflow: auto;
 }
 
 .quilt-visual-scale {
   display: inline-block;
   transform-origin: top center;
-  /* Ensure scaling container can expand: */
-  width: auto;
-  height: auto;
+  width: fit-content;  
+  height: fit-content; 
 }
 
 .quilt-visual {
   display: grid;
-  /* Let the grid size itself based on content */
-  width: auto;
-  height: auto;
+  width: fit-content; 
+  height: fit-content;
 }
 
 .quilt-block {
